@@ -29,9 +29,6 @@ echo "Setting up Node.js..."
 sudo apt update -y
 sudo apt install -y nodejs npm 
 
-# Start VSCode
-code --no-sandbox
-
 # Git config
 echo "Done."
 echo ""
@@ -39,6 +36,7 @@ echo "Installed versions:"
 code --version
 git --version
 node --version
+npm --version
 python --version
 echo ""
 echo "Don't forget Your Git config:"
@@ -48,3 +46,4 @@ echo ""
 echo "Close VSCode and restart with:"
 echo "    code --no-sandbox"
 echo ""
+echo "(or re-start deVStudio App)"
