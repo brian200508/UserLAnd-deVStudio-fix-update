@@ -35,10 +35,19 @@ code --no-sandbox
 # Git config
 echo "Done."
 echo ""
+echo "VSCode is:"
+code --version
+echo "Git is:"
+git --version
+echo "Python is:"
+python --version
+echo "Node.JS is:"
+node --version
+echo ""
 echo "Don't forget Your Git config:"
-echo "    git config --global user.name \"Your Name\""
-echo "    git config --global user.email \"your.email-address@domain.com\""
+echo "    git config --global user.name \"Your Name\""
+echo "    git config --global user.email \"your.email-address@domain.com\""
 echo ""
 echo "Close VSCode and restart with:"
-echo "    code --no-sandbox"
+echo "    code --no-sandbox"
 echo ""
