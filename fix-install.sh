@@ -35,14 +35,11 @@ code --no-sandbox
 # Git config
 echo "Done."
 echo ""
-echo "VSCode is:"
+echo "Installed versions:"
 code --version
-echo "Git is:"
 git --version
-echo "Python is:"
-python --version
-echo "Node.JS is:"
 node --version
+python --version
 echo ""
 echo "Don't forget Your Git config:"
 echo "    git config --global user.name \"Your Name\""
