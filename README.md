@@ -12,7 +12,7 @@ Workarounds for __deVStudio__ Android app in order to repair ```apt update``` an
  - Open Terminal and clone this repo and run script:
 
 ```bash
-cd ~ && sudo apt install -y git && git clone https://github.com/brian200508/deVStudio-fix-update.git && cd ~/deVStudio-fix-update && fix-install.sh
+cd ~ && sudo apt install -y git && git clone https://github.com/brian200508/deVStudio-fix-update.git && cd ~/deVStudio-fix-update && chmod +x fix-install.sh && fix-install.sh
 ```
 
  - Optional: Remove the cloned repo afterwards:
