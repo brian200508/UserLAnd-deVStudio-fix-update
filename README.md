@@ -9,9 +9,16 @@ Workarounds for __deVStudio__ Android app in order to repair ```apt update``` an
 
  - Install [__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app from [__Google Play__](https://play.google.com).
    See also [GitHub](https://github.com/CypherpunkArmory/deVStudio).
- - Open Terminal and clone this repo:
+ - Open Terminal and clone this repo and run script:
 
+```bash
+cd ~ && sudo apt install -y git && git clone https://github.com/brian200508/deVStudio-fix-update.git && cd ~/deVStudio-fix-update && fix-install.sh
+```
 
+ - Optional: Remove the cloned repo afterwards:
+```bash
+cd ~ && rm -rf ~/deVStudio-fix-update
+```
 
 
 
