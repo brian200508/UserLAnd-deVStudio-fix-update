@@ -10,14 +10,13 @@ For better convenience additionally some developer stuff like Git, Python3 and N
 
  - Install [__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app from [__Google Play__](https://play.google.com).
    See also [GitHub](https://github.com/CypherpunkArmory/deVStudio).
- - Open Terminal and clone this repo and run script:
-
+ - Close VSCode.
+ - In the background terminal clone this repo and run script:
 ```bash
 cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/deVStudio-fix-update.git && cd ~/deVStudio-fix-update && chmod +x fix-install.sh && ./fix-install.sh
 ```
 
- - restart __deVStudio__ app or close VSCode and re-start with
-
+ - restart VSCode:
 ```bash
 code --no-sandbox
 ```
