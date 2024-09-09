@@ -10,6 +10,7 @@ For better convenience additionally some developer stuff like Git, Python3 and N
 
  - Install [__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app from [__Google Play__](https://play.google.com).
    See also [GitHub](https://github.com/CypherpunkArmory/deVStudio).
+ - close VSCode
  - Open Terminal and clone this repo and run script:
 
 ```bash
