@@ -29,6 +29,9 @@ echo "Setting up Node.js..."
 sudo apt update -y
 sudo apt install -y nodejs npm 
 
+# Start VSCode
+code --no-sandbox
+
 # Git config
 echo "Done."
 echo ""
