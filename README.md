@@ -7,8 +7,8 @@ Workarounds for __deVStudio__ Android app in order to repair ```apt update``` an
 
 ### Install deVStudio Android
 
- - Install ![__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app from ![__Google Play__](https://play.google.com).
-   See also ![GitHub](https://github.com/CypherpunkArmory/deVStudio).
+ - Install [__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app from [__Google Play__](https://play.google.com).
+   See also [GitHub](https://github.com/CypherpunkArmory/deVStudio).
  - Open Terminal and clone this repo:
 
 
