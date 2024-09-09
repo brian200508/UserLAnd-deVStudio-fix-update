@@ -2,10 +2,11 @@
 # Fix Android app installation and update to latest VSCode
 
 Workarounds for __deVStudio__ Android app in order to repair ```apt update``` and update VSCode to the latest Version.
+For better convenience additionally some developer stuff like Git, Python3 and Node.JS is installed.
 
 ## Steps
 
-### Install deVStudio Android
+### Install deVStudio
 
  - Install [__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app from [__Google Play__](https://play.google.com).
    See also [GitHub](https://github.com/CypherpunkArmory/deVStudio).
