@@ -39,9 +39,12 @@ sudo apt update -y
 sudo apt install -y build-essential curl git wget pgp python-is-python3 python3-distutils python3-venv python3-pip
 
 # Node.js
-echo "Setting up Node.js..."
+echo "Setting up Node.js 20.x-LTS..."
 sudo apt update -y
-sudo apt install -y nodejs npm 
+# installs nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+# download and install Node.js (you may need to restart the terminal)
+nvm install 20
 
 # Git config
 echo "Done."
