@@ -67,8 +67,7 @@ chmod +x ~/fix-desktop-links.sh
 cd ~
 echo "Done."
 echo ""
-message = "Delete the cloned Git repo (~/UserLAnd-deVStudio-fix-update)?"
-yes_or_no "$message" && rm -rf ~/UserLAnd-deVStudio-fix-update
+yes_or_no "Delete the cloned Git repo (~/UserLAnd-deVStudio-fix-update)?" && rm -rf ~/UserLAnd-deVStudio-fix-update
 echo ""
 echo "Installed versions:"
 chromium --version
