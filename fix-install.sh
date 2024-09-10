@@ -9,15 +9,29 @@ sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packag
 rm -f packages.microsoft.gpg
 sudo apt install -y apt-transport-https
 sudo apt update -y
-#sudo apt install -y code # or code-insiders 
 
-# Download latest VSCode
+# Intall latest VSCode
 echo "Setting up latest VSCode..."
-wget -O ~/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
-sudo apt install -y ~/code_stable_arm64.deb
-rm ~/code_stable_arm64.deb
-sudo apt update -y
+#wget -O ~/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
+#sudo apt install -y ~/code_stable_arm64.deb
+#rm ~/code_stable_arm64.deb
+#sudo apt update -y
 #code --no-sandbox 
+sudo apt install -y code # or code-insiders 
+sudo apt update -y
+sed -i 's@code --new-window \%F@code --no-sandbox --new-window \%F@g' /usr/share/applications/code.desktop
+sed -i 's@code \%F@code --no-sandbox \%F@g' /usr/share/applications/code.desktop
+
+# Install Chromium Browser
+echo "Setting up Chromium Browser..."
+sudo apt update -y
+sudo apt install -y --reinstall software-properties-common
+sudo add-apt-repository ppa:xtradeb/apps -y
+sudo apt update -y
+sudo apt install -y chromium
+sudo apt update -y
+sed -i 's@chromium \%U@chromium --no-sandbox \%U@g' /usr/share/applications/chromium.desktop
+#chromium --no-sandbox 
 
 # Git, Python3 and essentials
 echo "Setting up Git, Python3 and essentials"
@@ -33,6 +47,7 @@ sudo apt install -y nodejs npm
 echo "Done."
 echo ""
 echo "Installed versions:"
+chromium --version
 code --version
 git --version
 node --version
@@ -43,7 +58,9 @@ echo "Don't forget Your Git config:"
 echo "    git config --global user.name \"Your Name\""
 echo "    git config --global user.email \"your.email-address@domain.com\""
 echo ""
+echo "For deVStudio:"
 echo "Close VSCode and restart with:"
 echo "    code --no-sandbox"
-echo ""
 echo "(or re-start deVStudio App)"
+echo ""
+
