@@ -35,7 +35,7 @@ sudo apt update -y
 # Install Chromium Browser
 echo "Setting up Chromium Browser..."
 sudo apt update -y
-sudo apt install -y --reinstall software-properties-common
+sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:xtradeb/apps -y
 sudo apt update -y
 sudo apt install -y chromium
@@ -53,6 +53,7 @@ echo "Setting up Node.js 20.x-LTS..."
 sudo apt update -y
 # installs nvm (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+source ~/.bashrc
 # download and install Node.js (you may need to restart the terminal)
 nvm install 20
 
@@ -75,6 +76,7 @@ code --version
 git --version
 node --version
 npm --version
+nvm --version
 python --version
 echo ""
 echo "Don't forget Your Git config:"
