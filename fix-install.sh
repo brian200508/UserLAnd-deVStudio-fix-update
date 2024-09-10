@@ -53,6 +53,7 @@ chmod +x ~/fix-desktop-links.sh
 ~/fix-desktop-links.sh
 
 # Summary
+cd ~
 echo "Done."
 echo ""
 echo "Installed versions:"
