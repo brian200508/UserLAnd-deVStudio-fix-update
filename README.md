@@ -11,14 +11,8 @@ For better convenience additionally some developer stuff like Chromium, Git, Pyt
 - Install Debian or Ubuntu
 - In the terminal clone this repo and run script:
 ```bash
-cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/UserLAnd-deVStudio-fix-update.git && cd ~/UserLAnd-deVStudio-fix-update && chmod +x fix-install.sh && ./fix-install.sh
+cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/UserLAnd-deVStudio-fix-update.git && cd ~/UserLAnd-deVStudio-fix-update && chmod +x fix-install.sh && ./fix-install.sh && cd ~
 ```
-
- - Remove the cloned repo afterwards:
-```bash
-cd ~ && rm -rf ~/UserLAnd-deVStudio-fix-update
-```
-
 
 ## deVStudio
 
@@ -27,19 +21,13 @@ cd ~ && rm -rf ~/UserLAnd-deVStudio-fix-update
  - Close VSCode.
  - In the background terminal clone this repo and run script:
 ```bash
-cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/UserLAnd-deVStudio-fix-update.git && cd ~/UserLAnd-deVStudio-fix-update && chmod +x fix-install.sh && ./fix-install.sh
+cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/UserLAnd-deVStudio-fix-update.git && cd ~/UserLAnd-deVStudio-fix-update && chmod +x fix-install.sh && ./fix-install.sh && cd ~
 ```
 
  - restart VSCode:
 ```bash
 code --no-sandbox
 ```
-
- - Remove the cloned repo afterwards:
-```bash
-cd ~ && rm -rf ~/UserLAnd-deVStudio-fix-update
-```
-
 
 ## Notes
 
