@@ -94,4 +94,4 @@ echo "Close VSCode and restart with:"
 echo "    code --no-sandbox"
 echo "(or re-start deVStudio App)"
 echo ""
-
+cd ~
