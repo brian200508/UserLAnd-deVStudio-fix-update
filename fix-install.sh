@@ -1,5 +1,15 @@
 #!/bin/bash 
 
+function yes_or_no {
+    while true; do
+        read -p "$* [y/n]: " yn
+        case $yn in
+            [Yy]*) return 0  ;;  
+            [Nn]*) echo "Aborted" ; return  1 ;;
+        esac
+    done
+}
+
 # Fix vscode.list: Use signed Microsoft Repo
 echo "Signing VSCode repository..."
 sudo apt install -y wget gpg
@@ -55,6 +65,9 @@ chmod +x ~/fix-desktop-links.sh
 # Summary
 cd ~
 echo "Done."
+echo ""
+message = "Delete the cloned Git repo (~/UserLAnd-deVStudio-fix-update)?"
+yes_or_no "$message" && rm -rf ~/UserLAnd-deVStudio-fix-update
 echo ""
 echo "Installed versions:"
 chromium --version
