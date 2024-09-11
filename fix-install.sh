@@ -12,23 +12,20 @@ function yes_or_no {
 
 # Fix vscode.list: Use signed Microsoft Repo
 echo "Signing VSCode repository..."
-sudo apt install -y wget gpg
+sudo apt install -y wget gpg apt-transport-https
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 rm -f packages.microsoft.gpg
-sudo apt install -y apt-transport-https
 sudo apt update -y
 
 # Intall latest VSCode
 echo "Setting up latest VSCode..."
-#wget -O ~/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
-#sudo apt install -y ~/code_stable_arm64.deb
-#rm ~/code_stable_arm64.deb
-#sudo apt update -y
-#code --no-sandbox 
-sudo apt install -y code # or code-insiders 
+wget -O ~/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
+sudo apt install -y ~/code_stable_arm64.deb
+rm ~/code_stable_arm64.deb
 sudo apt update -y
+#code --no-sandbox 
 #sed -i 's@code --new-window \%F@code --no-sandbox --new-window \%F@g' /usr/share/applications/code.desktop
 #sed -i 's@code \%F@code --no-sandbox \%F@g' /usr/share/applications/code.desktop
 
