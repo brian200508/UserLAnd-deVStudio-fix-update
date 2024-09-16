@@ -1,13 +1,60 @@
 #!/bin/bash 
 
-function yes_or_no {
-    while true; do
-        read -p "$* [y/n]: " yn
-        case $yn in
-            [Yy]*) return 0  ;;  
-            [Nn]*) echo "Aborted" ; return  1 ;;
+R="$(printf '\033[1;31m')"                    
+G="$(printf '\033[1;32m')"
+Y="$(printf '\033[1;33m')"
+B="$(printf '\033[1;34m')"
+C="$(printf '\033[1;36m')"                             
+W="$(printf '\033[0m')"
+BOLD="$(printf '\033[1m')"
+
+function confirmation_y_or_n() {
+	 while true; do
+        read -p "${R}[${W}-${R}]${Y}${BOLD} $1 ${Y}(y/n) "${W} response
+        response="${response:-y}"
+        eval "$2='$response'"
+        case $response in
+            [yY]* )
+                echo "${R}[${W}-${R}]${G}Continuing with answer: $response"${W}
+				sleep 0.2
+                break;;
+            [nN]* )
+                echo "${R}[${W}-${R}]${C}Skipping this setp"${W}
+				sleep 0.2
+                break;;
+            * )
+               	echo "${R}[${W}-${R}]${R}Invalid input. Please enter 'y' or 'n'."${W}
+                ;;
         esac
     done
+
+}
+
+function setup_tx11autostart() {
+    #if [[ "$zsh_answer" == "y" ]]; then
+    #    rc_file=~/.zshrc
+    #else
+        rc_file=~/.bashrc
+    #fi
+    #banner
+    confirmation_y_or_n "Do you want to start Termux X11 automatically with Termux?" tx11_autostart
+    if [[ "$tx11_autostart" == "y" ]]; then
+        # check if already configured
+        if grep -q "^startxfce4-debian.sh" $rc_file; then
+            echo "Termux:X11 start already appended"
+        else
+            echo '# Start Termux:X11' >> $rc_file
+            echo 'if [ $( ps aux | grep -c "termux.x11" ) -gt 1 ]; then echo "X server is already running." ; else startxfce4-debian.sh ; fi' >> $rc_file
+            echo "Termux:X11 start add to $rc_file"
+        fi
+    else
+        # check if already configured
+        if grep -q "^startxfce4-debian.sh" $rc_file; then
+            sed -i "" "/Start Termux:X11/d" $rc_file
+            sed -i "" "/startxfce4-debian.sh/d" $rc_file
+            echo "Termux:X11 start removed from $rc_file"
+        fi
+    fi
 }
 
 # Setup Termux
@@ -28,6 +75,9 @@ proot-distro login debian -- echo "droiduser ALL=(ALL:ALL) ALL" >> /etc/sudoers
 # Install XFCE4
 echo "Setting up XFCE4..."
 proot-distro login debian --user droiduser -- sudo apt install xfce4
+proot-distro login debian --user droiduser -- cp /tmp/proot-distro-debian-termux-x11/startxfce4-debian.sh ~/startxfce4-debian.sh
+proot-distro login debian --user droiduser -- chmod +x /tmp/proot-distro-debian-termux-x11/startxfce4-debian.sh
+proot-distro login debian --user droiduser -- chmod +x ~/startxfce4-debian.sh
 
 # Install Termux X11
 echo "Setting up Termux X11..."
@@ -84,8 +134,8 @@ proot-distro login debian --user droiduser -- [ -s "$NVM_DIR/bash_completion" ] 
 proot-distro login debian --user droiduser -- nvm install 20
 
 # fix desktop links
-proot-distro login debian --user droiduser -- cp /tmp/fix-desktop-links.sh ~/fix-desktop-links.sh
-proot-distro login debian --user droiduser -- chmod +x /tmp/fix-desktop-links.sh
+proot-distro login debian --user droiduser -- cp /tmp/proot-distro-debian-termux-x11/fix-desktop-links.sh ~/fix-desktop-links.sh
+proot-distro login debian --user droiduser -- chmod +x /tmp/proot-distro-debian-termux-x11/fix-desktop-links.sh
 proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
 ~/fix-desktop-links.sh
 
@@ -93,7 +143,10 @@ proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
 cd ~
 echo "Done."
 echo ""
-yes_or_no "Delete the cloned Git repo (/tmp/proot-distro-debian-termux-x11)?" && rm -rf /tmp/proot-distro-debian-termux-x11
+confirmation_y_or_n "Do you want to delete the cloned Git repo (/tmp/proot-distro-debian-termux-x11)?" delete_cloned_repo 
+if [[ "$delete_cloned_repo" == "y" ]]; then
+    rm -rf /tmp/proot-distro-debian-termux-x11
+fi
 echo ""
 echo "Installed versions:"
 proot-distro login debian -- chromium --version
@@ -111,5 +164,8 @@ echo ""
 echo "After Chromium or VSCode update You can fix the desktop application links"
 echo "by running this command:"
 echo "    ~/fix-desktop-links.sh"
+echo ""
+echo "Start XFCE (in Termux - not in Proot-Distro)"
+echo "    ~/startxfce4_debian.sh"
 echo ""
 cd ~
