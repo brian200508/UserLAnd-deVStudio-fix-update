@@ -141,6 +141,8 @@ proot-distro login debian --user droiduser -- chmod +x $TMP_DIR/proot-distro-deb
 proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
 proot-distro login debian --user droiduser -- ~/fix-desktop-links.sh
 
+setup_tx11autostart
+
 # Summary
 cd ~
 echo "Done."
