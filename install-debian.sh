@@ -71,9 +71,8 @@ echo "Setting up User..."
 proot-distro login debian -- apt update -y
 proot-distro login debian -- apt install -y sudo nano adduser -y
 proot-distro login debian -- adduser droiduser
-proot-distro login debian -- sudo usermod -aG sudo droiduser
-#proot-distro login debian -- echo "# Add droiduser to sudoers" >> /etc/sudoers
-#proot-distro login debian -- echo "droiduser ALL=(ALL:ALL) ALL" >> /etc/sudoers
+proot-distro login debian -- sed -i '$ a # Add droiduser to sudoers' /etc/sudoers
+proot-distro login debian -- sed -i '$ a droiduser ALL=(ALL:ALL)' /etc/sudoers
 
 # Install XFCE4
 echo "Setting up XFCE4..."
