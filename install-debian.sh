@@ -71,8 +71,9 @@ echo "Setting up User..."
 proot-distro login debian -- apt update -y
 proot-distro login debian -- apt install -y sudo nano adduser -y
 proot-distro login debian -- adduser droiduser
-proot-distro login debian -- echo "# Add droiduser to sudoers" >> /etc/sudoers
-proot-distro login debian -- echo "droiduser ALL=(ALL:ALL) ALL" >> /etc/sudoers
+proot-distro login debian -- usermod -aG sudo droiduser
+#proot-distro login debian -- echo "# Add droiduser to sudoers" >> /etc/sudoers
+#proot-distro login debian -- echo "droiduser ALL=(ALL:ALL) ALL" >> /etc/sudoers
 
 # Install XFCE4
 echo "Setting up XFCE4..."
@@ -139,7 +140,7 @@ proot-distro login debian --user droiduser -- nvm install 20
 proot-distro login debian --user droiduser -- cp $TMP_DIR/proot-distro-debian-termux-x11/fix-desktop-links.sh ~/fix-desktop-links.sh
 proot-distro login debian --user droiduser -- chmod +x $TMP_DIR/proot-distro-debian-termux-x11/fix-desktop-links.sh
 proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
-~/fix-desktop-links.sh
+proot-distro login debian --user droiduser -- ~/fix-desktop-links.sh
 
 # Summary
 cd ~
@@ -151,13 +152,13 @@ if [[ "$delete_cloned_repo" == "y" ]]; then
 fi
 echo ""
 echo "Installed versions:"
-proot-distro login debian -- chromium --version
-proot-distro login debian -- code --version
-proot-distro login debian -- git --version
-proot-distro login debian -- node --version
-proot-distro login debian -- npm --version
-proot-distro login debian -- nvm --version
-proot-distro login debian -- python --version
+proot-distro login debian --user droiduser -- chromium --version
+proot-distro login debian --user droiduser -- code --version
+proot-distro login debian --user droiduser -- git --version
+proot-distro login debian --user droiduser -- node --version
+proot-distro login debian --user droiduser -- npm --version
+proot-distro login debian --user droiduser -- nvm --version
+proot-distro login debian --user droiduser -- python --version
 echo ""
 echo "Don't forget Your Git config:"
 echo "    git config --global user.name \"Your Name\""
