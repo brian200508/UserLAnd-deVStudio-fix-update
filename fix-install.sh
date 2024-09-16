@@ -10,14 +10,17 @@ function yes_or_no {
     done
 }
 
-# Fix vscode.list: Use signed Microsoft Repo
-echo "Signing VSCode repository..."
-sudo apt install -y wget gpg apt-transport-https
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-rm -f packages.microsoft.gpg
-sudo apt update -y
+# Install XFCE4
+
+
+## Fix vscode.list: Use signed Microsoft Repo
+#echo "Signing VSCode repository..."
+#sudo apt install -y wget gpg apt-transport-https
+#wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+#sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+#sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+#rm -f packages.microsoft.gpg
+#sudo apt update -y
 
 # Intall latest VSCode
 echo "Setting up latest VSCode..."
@@ -32,9 +35,9 @@ sudo apt update -y
 # Install Chromium Browser
 echo "Setting up Chromium Browser..."
 sudo apt update -y
-sudo apt install -y software-properties-common
-sudo add-apt-repository ppa:xtradeb/apps -y
-sudo apt update -y
+#sudo apt install -y software-properties-common
+#sudo add-apt-repository ppa:xtradeb/apps -y
+#sudo apt update -y
 sudo apt install -y chromium
 sudo apt update -y
 #sed -i 's@chromium \%U@chromium --no-sandbox \%U@g' /usr/share/applications/chromium.desktop
