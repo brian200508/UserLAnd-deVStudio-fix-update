@@ -1,36 +1,14 @@
 
-# Fix Android app installation and update to latest VSCode
+# Install Proot-Distro debian with XFCE4/Termux X11, Chromium and VSCode
 
-Workarounds for [__UserLAnd__](https://play.google.com/store/apps/details?id=tech.ula) Debian/Ubuntu distro installation and [__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app in order to repair ```apt update```, Chromium and update VSCode to the latest Version.
+Install Termux Proot-Distro (XFCE4-Desktop) with Termux:x11 support.
 For better convenience additionally some developer stuff like Chromium, Git, Python3 and Node.JS is installed.
 
 ## UserLAnd
 
-- Install [__UserLAnd__](https://play.google.com/store/apps/details?id=tech.ula) Android app from [__Google Play__](https://play.google.com).
-  See also [GitHub](https://github.com/CypherpunkArmory/UserLAnd).
-- Install Debian or Ubuntu
+- Install [__Termux__](https://github.com/termux/termux-app/releases) Android app from [__GitHub__](https://github.com/termux).
+- Install [__Termux X11__](https://github.com/termux/termux-app/releases) Android app from [__GitHub__](https://github.com/termux/termux-x11/releases).
 - In the terminal clone this repo and run script:
 ```bash
-cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/UserLAnd-deVStudio-fix-update.git && cd ~/UserLAnd-deVStudio-fix-update && chmod +x fix-install.sh && ./fix-install.sh && cd ~
+cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/proot-distro-debian-termux-x11.git && cd ~/proot-distro-debian-termux-x11 && chmod +x install-debian.sh && ./install-debian.sh && cd ~
 ```
-
-## deVStudio
-
- - Install [__deVStudio__](https://play.google.com/store/apps/details?id=tech.ula.devstudio) Android app from [__Google Play__](https://play.google.com).
-   See also [GitHub](https://github.com/CypherpunkArmory/deVStudio).
- - Close VSCode.
- - In the background terminal clone this repo and run script:
-```bash
-cd ~ && sudo apt update -y && sudo apt install -y git && git clone https://github.com/brian200508/UserLAnd-deVStudio-fix-update.git && cd ~/UserLAnd-deVStudio-fix-update && chmod +x fix-install.sh && ./fix-install.sh && cd ~
-```
-
- - restart VSCode:
-```bash
-code --no-sandbox
-```
-
-## Notes
-
-The __deVStudio__ Android app is FOSS.
-This app is released under the GPLv3.  The source code can be found here.
-This app is not created by the main VS Code development team.  Instead it is an adaptation that allows the Linux version to run on Android.
