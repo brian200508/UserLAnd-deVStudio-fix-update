@@ -46,7 +46,8 @@ function setup_tx11autostart() {
             echo "Termux:X11 start already appended"
         else
             echo '# Start Termux:X11' >> $rc_file
-            echo 'if [ $( ps aux | grep -c "termux.x11" ) -gt 1 ]; then echo "X server is already running." ; else startxfce4-debian.sh ; fi' >> $rc_file
+            #echo 'if [ $( ps aux | grep -c "termux.x11" ) -gt 1 ]; then echo "X server is already running." ; else startxfce4-debian.sh ; fi' >> $rc_file
+            echo '~/startxfce4-debian.sh' >> $rc_file
             echo "Termux:X11 start add to $rc_file"
         fi
     else
