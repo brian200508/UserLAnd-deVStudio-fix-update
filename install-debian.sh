@@ -1,4 +1,6 @@
-#!/bin/bash 
+#!/bin/bash
+
+TMP_DIR=/sdcard
 
 R="$(printf '\033[1;31m')"                    
 G="$(printf '\033[1;32m')"
@@ -75,8 +77,8 @@ proot-distro login debian -- echo "droiduser ALL=(ALL:ALL) ALL" >> /etc/sudoers
 # Install XFCE4
 echo "Setting up XFCE4..."
 proot-distro login debian --user droiduser -- sudo apt install xfce4
-proot-distro login debian --user droiduser -- cp /tmp/proot-distro-debian-termux-x11/startxfce4-debian.sh ~/startxfce4-debian.sh
-proot-distro login debian --user droiduser -- chmod +x /tmp/proot-distro-debian-termux-x11/startxfce4-debian.sh
+proot-distro login debian --user droiduser -- cp $TMP_DIR/proot-distro-debian-termux-x11/startxfce4-debian.sh ~/startxfce4-debian.sh
+proot-distro login debian --user droiduser -- chmod +x $TMP_DIR/proot-distro-debian-termux-x11/startxfce4-debian.sh
 proot-distro login debian --user droiduser -- chmod +x ~/startxfce4-debian.sh
 
 # Install Termux X11
@@ -97,9 +99,9 @@ pkg install pulseaudio
 
 # Intall latest VSCode
 echo "Setting up latest VSCode..."
-proot-distro login debian --user droiduser --shared-tmp -- wget -O /tmp/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
-proot-distro login debian --user droiduser --shared-tmp -- sudo apt install -y /tmp/code_stable_arm64.deb
-proot-distro login debian --user droiduser --shared-tmp -- rm /tmp/code_stable_arm64.deb
+proot-distro login debian --user droiduser --shared-tmp -- wget -O $TMP_DIR/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
+proot-distro login debian --user droiduser --shared-tmp -- sudo apt install -y $TMP_DIR/code_stable_arm64.deb
+proot-distro login debian --user droiduser --shared-tmp -- rm $TMP_DIR/code_stable_arm64.deb
 proot-distro login debian --user droiduser -- sudo apt update -y
 #proot-distro login debian --user droiduser -- code --no-sandbox 
 #proot-distro login debian --user droiduser -- sed -i 's@code --new-window \%F@code --no-sandbox --new-window \%F@g' /usr/share/applications/code.desktop
@@ -134,8 +136,8 @@ proot-distro login debian --user droiduser -- [ -s "$NVM_DIR/bash_completion" ] 
 proot-distro login debian --user droiduser -- nvm install 20
 
 # fix desktop links
-proot-distro login debian --user droiduser -- cp /tmp/proot-distro-debian-termux-x11/fix-desktop-links.sh ~/fix-desktop-links.sh
-proot-distro login debian --user droiduser -- chmod +x /tmp/proot-distro-debian-termux-x11/fix-desktop-links.sh
+proot-distro login debian --user droiduser -- cp $TMP_DIR/proot-distro-debian-termux-x11/fix-desktop-links.sh ~/fix-desktop-links.sh
+proot-distro login debian --user droiduser -- chmod +x $TMP_DIR/proot-distro-debian-termux-x11/fix-desktop-links.sh
 proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
 ~/fix-desktop-links.sh
 
@@ -143,9 +145,9 @@ proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
 cd ~
 echo "Done."
 echo ""
-confirmation_y_or_n "Do you want to delete the cloned Git repo (/tmp/proot-distro-debian-termux-x11)?" delete_cloned_repo 
+confirmation_y_or_n "Do you want to delete the cloned Git repo ($TMP_DIR/proot-distro-debian-termux-x11)?" delete_cloned_repo 
 if [[ "$delete_cloned_repo" == "y" ]]; then
-    rm -rf /tmp/proot-distro-debian-termux-x11
+    rm -rf $TMP_DIR/proot-distro-debian-termux-x11
 fi
 echo ""
 echo "Installed versions:"
