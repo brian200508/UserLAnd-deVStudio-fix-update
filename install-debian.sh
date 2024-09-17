@@ -1,7 +1,5 @@
 #!/bin/bash
 
-TMP_DIR=/sdcard
-
 R="$(printf '\033[1;31m')"                    
 G="$(printf '\033[1;32m')"
 Y="$(printf '\033[1;33m')"
@@ -9,6 +7,15 @@ B="$(printf '\033[1;34m')"
 C="$(printf '\033[1;36m')"                             
 W="$(printf '\033[0m')"
 BOLD="$(printf '\033[1m')"
+
+function banner() {
+clear
+echo "${Y}  █▀▄ █▀▀ █▄   ▀ ▄▀▄  ▄   ▀█▀ █▀▀ █▀█ █▀▄▀█ █░█ ▀▄▀   ▀▄▀ ▄▀█ ▄▀█  "${W}
+echo "${Y}  █▄▀ ██▄ █▄▀ ░█ █▀█ █░█  ░█░ ██▄ █▀▄ █░▀░█ █▄█ █░█   █░█  ░█  ░█  "${W}
+echo
+echo "${C}${BOLD} Install Proot-Distro Debian with XFCE4/Termux X11 in Termux"${W}
+echo
+}
 
 function confirmation_y_or_n() {
 	 while true; do
@@ -47,7 +54,7 @@ function setup_tx11autostart() {
         else
             echo '# Start Termux:X11' >> $rc_file
             #echo 'if [ $( ps aux | grep -c "termux.x11" ) -gt 1 ]; then echo "X server is already running." ; else startxfce4-debian.sh ; fi' >> $rc_file
-            echo '~/startxfce4-debian.sh' >> $rc_file
+            echo '~/startxfce4-debian.sh &' >> $rc_file
             echo "Termux:X11 start add to $rc_file"
         fi
     else
@@ -61,14 +68,20 @@ function setup_tx11autostart() {
 }
 
 # Setup Termux
-echo "Setting up Termux..."
+banner
+echo "${G}${BOLD} Setting up Termux..."${W}
 termux-setup-storage
 pkg update -y
-pkg install -y git wget proot-distro
+pkg install -y curl git wget proot-distro
+
+# Setup Debian
+banner
+echo "${G}${BOLD} Setting up Proot-Distro Debian..."${W}
 proot-distro install debian
 
 # Setup user
-echo "Setting up User..."
+banner
+echo "${G}${BOLD} Setting up User..."${W}
 proot-distro login debian -- apt update -y
 proot-distro login debian -- apt install -y sudo nano adduser -y
 proot-distro login debian -- adduser droiduser
@@ -76,21 +89,23 @@ proot-distro login debian -- sed -i '$ a # Add droiduser to sudoers' /etc/sudoer
 proot-distro login debian -- sed -i '$ a droiduser ALL=(ALL:ALL) ALL' /etc/sudoers
 
 # Install XFCE4
-echo "Setting up XFCE4..."
+banner
+echo "${G}${BOLD} Setting up Proot-Distro XFCE4..."${W}
 proot-distro login debian --user droiduser -- sudo apt install xfce4
-proot-distro login debian --user droiduser -- cp $TMP_DIR/proot-distro-debian-termux-x11/startxfce4-debian.sh ~/startxfce4-debian.sh
-proot-distro login debian --user droiduser -- chmod +x $TMP_DIR/proot-distro-debian-termux-x11/startxfce4-debian.sh
+proot-distro login debian --user droiduser -- curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/install-debian.sh -o ~/startxfce4-debian.sh
 proot-distro login debian --user droiduser -- chmod +x ~/startxfce4-debian.sh
 
 # Install Termux X11
-echo "Setting up Termux X11..."
+banner
+echo "${G}${BOLD} Setting up Termux X11..."${W}
 pkg update
 pkg install x11-repo
 pkg install termux-x11-nightly
 pkg install pulseaudio
 
 ## Fix vscode.list: Use signed Microsoft Repo
-#echo "Signing VSCode repository..."
+#banner
+#echo "${G}${BOLD} Signing VSCode repository..."${W}
 #proot-distro login debian -- sudo apt install -y wget gpg apt-transport-https
 #proot-distro login debian -- wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 #proot-distro login debian -- sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
@@ -99,17 +114,19 @@ pkg install pulseaudio
 #proot-distro login debian -- sudo apt update -y
 
 # Intall latest VSCode
-echo "Setting up latest VSCode..."
-proot-distro login debian --user droiduser --shared-tmp -- wget -O $TMP_DIR/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
-proot-distro login debian --user droiduser --shared-tmp -- sudo apt install -y $TMP_DIR/code_stable_arm64.deb
-proot-distro login debian --user droiduser --shared-tmp -- rm $TMP_DIR/code_stable_arm64.deb
+banner
+echo "${G}${BOLD} Setting up latest VSCode..."${W}
+proot-distro login debian --user droiduser -- wget -O ~/code_stable_arm64.deb 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-arm64'
+proot-distro login debian --user droiduser -- sudo apt install -y ~/code_stable_arm64.deb
+proot-distro login debian --user droiduser -- rm ~/code_stable_arm64.deb
 proot-distro login debian --user droiduser -- sudo apt update -y
 #proot-distro login debian --user droiduser -- code --no-sandbox 
 #proot-distro login debian --user droiduser -- sed -i 's@code --new-window \%F@code --no-sandbox --new-window \%F@g' /usr/share/applications/code.desktop
 #proot-distro login debian --user droiduser -- sed -i 's@code \%F@code --no-sandbox \%F@g' /usr/share/applications/code.desktop
 
 # Install Chromium Browser
-echo "Setting up Chromium Browser..."
+banner
+echo "${G}${BOLD} Setting up Chromium browser..."${W}
 proot-distro login debian --user droiduser -- sudo apt update -y
 #proot-distro login debian --user droiduser -- sudo apt install -y software-properties-common
 #proot-distro login debian --user droiduser -- sudo add-apt-repository ppa:xtradeb/apps -y
@@ -120,12 +137,14 @@ proot-distro login debian --user droiduser -- sudo apt update -y
 #proot-distro login debian --user droiduser -- chromium --no-sandbox 
 
 # Git, Python3 and essentials
-echo "Setting up Git, Python3 and essentials"
+banner
+echo "${G}${BOLD} Setting up Git, Python3 and essentials..."${W}
 proot-distro login debian --user droiduser -- sudo apt update -y
 proot-distro login debian --user droiduser -- sudo apt install -y build-essential curl git wget pgp python-is-python3 python3-distutils python3-venv python3-pip
 
 # Node.js
-echo "Setting up Node.js 20.x-LTS..."
+banner
+echo "${G}${BOLD} Setting up Node.js 20.x-LTS..."${W}
 proot-distro login debian --user droiduser -- sudo apt update -y
 # installs nvm (Node Version Manager)
 proot-distro login debian --user droiduser -- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
@@ -137,23 +156,24 @@ proot-distro login debian --user droiduser -- [ -s "$NVM_DIR/bash_completion" ] 
 proot-distro login debian --user droiduser -- nvm install 20
 
 # fix desktop links
-proot-distro login debian --user droiduser -- cp $TMP_DIR/proot-distro-debian-termux-x11/fix-desktop-links.sh ~/fix-desktop-links.sh
-proot-distro login debian --user droiduser -- chmod +x $TMP_DIR/proot-distro-debian-termux-x11/fix-desktop-links.sh
+banner
+echo "${G}${BOLD} Fixing desktop links..."${W}
+proot-distro login debian --user droiduser -- curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/fix-desktop-links.sh -o ~/fix-desktop-links.sh
 proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
-proot-distro login debian --user droiduser -- ~/fix-desktop-links.sh
 
+banner
+echo "${G}${BOLD} Setting up X11 autostart..."${W}
 setup_tx11autostart
 
+echo ""
+echo "${G}${BOLD} Removing installer script..."${W}
+rm -f ~/install-debian.sh
+
 # Summary
+banner
+echo "${G}${BOLD} Setting up Proot-Distro Debian ${Y}done${G}."${W}
 cd ~
-echo "Done."
-echo ""
-confirmation_y_or_n "Do you want to delete the cloned Git repo ($TMP_DIR/proot-distro-debian-termux-x11)?" delete_cloned_repo 
-if [[ "$delete_cloned_repo" == "y" ]]; then
-    rm -rf $TMP_DIR/proot-distro-debian-termux-x11
-fi
-echo ""
-echo "Installed versions:"
+echo "${G}Installed versions:"${W}
 proot-distro login debian --user droiduser -- chromium --version
 proot-distro login debian --user droiduser -- code --version
 proot-distro login debian --user droiduser -- git --version
@@ -162,15 +182,17 @@ proot-distro login debian --user droiduser -- npm --version
 proot-distro login debian --user droiduser -- nvm --version
 proot-distro login debian --user droiduser -- python --version
 echo ""
-echo "Don't forget Your Git config:"
-echo "    git config --global user.name \"Your Name\""
-echo "    git config --global user.email \"your.email-address@domain.com\""
+echo "${G}Don't forget Your Git config:"${W}
+echo "    ${Y}git config --global user.name \"Your Name\""${W}
+echo "    ${Y}git config --global user.email \"your.email-address@domain.com\""${W}
 echo ""
-echo "After Chromium or VSCode update You can fix the desktop application links"
-echo "by running this command:"
-echo "    ~/fix-desktop-links.sh"
+echo "${G}After Chromium or VSCode update You can fix the desktop application links"${W}
+echo "${G}by running this command (in Proot-Distro):"${W}
+echo "    ${C}https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/fix-desktop-links.sh -o ~/fix-desktop-links.sh${G} once"${W}
+echo "    ${C}chmod +x ~/fix-desktop-links.sh{G} once"${W}
+echo "    ${Y}~/fix-desktop-links.sh"${W}
 echo ""
-echo "Start XFCE (in Termux - not in Proot-Distro)"
-echo "    ~/startxfce4_debian.sh"
+echo "${G}Start XFCE (in Termux - ${Y}not in Proot-Distro!!!${G})"${W}
+echo "    ${Y}~/startxfce4_debian.sh"${W}
 echo ""
 cd ~
