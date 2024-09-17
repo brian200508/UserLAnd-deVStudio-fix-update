@@ -182,7 +182,7 @@ wait_for_key
 banner
 echo "${G}${BOLD} Setting up Node.js..."${W}
 proot-distro login debian --user droiduser -- sudo apt update -y
-proot-distro login debian --user droiduser -- sudo apt install -y nodejs
+proot-distro login debian --user droiduser -- sudo apt install -y nodejs npm
 wait_for_key
 
 # fix desktop links
@@ -211,7 +211,6 @@ proot-distro login debian --user droiduser -- code --version
 proot-distro login debian --user droiduser -- git --version
 proot-distro login debian --user droiduser -- node --version
 proot-distro login debian --user droiduser -- npm --version
-proot-distro login debian --user droiduser -- nvm --version
 proot-distro login debian --user droiduser -- python --version
 echo ""
 echo "${G}Don't forget Your Git config:"${W}
@@ -226,6 +225,8 @@ echo "    ${Y}~/fix-desktop-links.sh"${W}
 echo ""
 echo "${G}Start XFCE (in Termux - ${Y}not in Proot-Distro!!!${G})"${W}
 echo "    ${Y}~/startxfce4_debian.sh"${W}
+echo ""
+wait_for_key
 echo ""
 echo "${C}Starting Termux X11 right now..."${W}
 source ~/.bashrc
