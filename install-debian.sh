@@ -80,12 +80,12 @@ function setup_tx11autostart() {
 # Setup Termux
 banner
 echo "${G}${BOLD} Setting up Termux..."${W}
-pkg update
+pkg update -y
 termux-setup-storage
-pkg update
-pkg install git wget 
-pkg update
-pkg install proot-distro
+pkg update -y
+pkg install -y git wget 
+pkg update -y
+pkg install -y proot-distro
 wait_for_key
 
 # Setup Debian
@@ -98,7 +98,7 @@ wait_for_key
 banner
 echo "${G}${BOLD} Setting up User..."${W}
 proot-distro login debian -- apt update -y
-proot-distro login debian -- apt install -y sudo nano adduser -y
+proot-distro login debian -- apt install -y sudo nano adduser
 proot-distro login debian -- adduser droiduser
 proot-distro login debian -- sed -i '$ a # Add droiduser to sudoers' /etc/sudoers
 proot-distro login debian -- sed -i '$ a droiduser ALL=(ALL:ALL) ALL' /etc/sudoers
@@ -107,7 +107,7 @@ wait_for_key
 # Install XFCE4
 banner
 echo "${G}${BOLD} Setting up Proot-Distro XFCE4..."${W}
-proot-distro login debian --user droiduser -- sudo apt install xfce4
+proot-distro login debian --user droiduser -- sudo apt install -y xfce4
 curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/startxfce4-debian.sh -o ~/startxfce4-debian.sh
 chmod +x ~/startxfce4-debian.sh
 wait_for_key
@@ -115,10 +115,10 @@ wait_for_key
 # Install Termux X11
 banner
 echo "${G}${BOLD} Setting up Termux X11..."${W}
-pkg update
-pkg install x11-repo
-pkg install termux-x11-nightly
-pkg install pulseaudio
+pkg update -y
+pkg install -y x11-repo
+pkg install -y termux-x11-nightly
+pkg install -y pulseaudio
 wait_for_key
 
 ## Fix vscode.list: Use signed Microsoft Repo
@@ -166,16 +166,9 @@ wait_for_key
 
 # Node.js
 banner
-echo "${G}${BOLD} Setting up Node.js 20.x-LTS..."${W}
+echo "${G}${BOLD} Setting up Node.js..."${W}
 proot-distro login debian --user droiduser -- sudo apt update -y
-# installs nvm (Node Version Manager)
-proot-distro login debian --user droiduser -- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-#FIXME: . ~/.bashrc
-proot-distro login debian --user droiduser -- export NVM_DIR="$HOME/.nvm"
-proot-distro login debian --user droiduser -- [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-proot-distro login debian --user droiduser -- [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# download and install Node.js (you may need to restart the terminal)
-proot-distro login debian --user droiduser -- nvm install 20
+proot-distro login debian --user droiduser -- sudo apt install -y nodejs
 wait_for_key
 
 # fix desktop links
@@ -213,7 +206,7 @@ echo "    ${Y}git config --global user.email \"your.email-address@domain.com\""$
 echo ""
 echo "${G}After Chromium or VSCode update You can fix the desktop application links"${W}
 echo "${G}by running this command (in Proot-Distro):"${W}
-echo "    ${C}https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/fix-desktop-links.sh -o ~/fix-desktop-links.sh${G} once"${W}
+echo "    ${C}curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/fix-desktop-links.sh -o ~/fix-desktop-links.sh${G} once"${W}
 echo "    ${C}chmod +x ~/fix-desktop-links.sh{G} once"${W}
 echo "    ${Y}~/fix-desktop-links.sh"${W}
 echo ""
