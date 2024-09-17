@@ -80,9 +80,12 @@ function setup_tx11autostart() {
 # Setup Termux
 banner
 echo "${G}${BOLD} Setting up Termux..."${W}
+pkg update
 termux-setup-storage
 pkg update
-pkg install git wget proot-distro
+pkg install git wget 
+pkg update
+pkg install proot-distro
 wait_for_key
 
 # Setup Debian
