@@ -223,7 +223,7 @@ echo "    ${C}curl -Lf https://raw.githubusercontent.com/brian200508/proot-distr
 echo "    ${C}chmod +x ~/fix-desktop-links.sh{G} once"${W}
 echo "    ${Y}~/fix-desktop-links.sh"${W}
 echo ""
-echo "${G}Start XFCE (in Termux - ${Y}not in Proot-Distro!!!${G})"${W}
+echo "${G}Start XFCE manually (in Termux - ${Y}not in Proot-Distro!!!${G})"${W}
 echo "    ${Y}~/startxfce4_debian.sh"${W}
 echo ""
 wait_for_key
