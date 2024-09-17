@@ -175,7 +175,7 @@ wait_for_key
 banner
 echo "${G}${BOLD} Setting up Git, Python3 and essentials..."${W}
 proot-distro login debian --user droiduser -- sudo apt update -y
-proot-distro login debian --user droiduser -- sudo apt install -y build-essential curl git wget pgp python-is-python3 python3-distutils python3-venv python3-pip
+proot-distro login debian --user droiduser -- sudo apt install -y build-essential curl gh git wget pgp python-is-python3 python3-distutils python3-venv python3-pip
 wait_for_key
 
 # Node.js
