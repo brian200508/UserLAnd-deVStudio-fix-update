@@ -88,6 +88,20 @@ pkg update -y
 pkg install -y proot-distro
 wait_for_key
 
+## Setup nerd fonts
+#banner
+#echo "${G}${BOLD} Setting up nerd fonts..."${W}
+#cd ~
+#pkg install -y clang git make
+#git clone https://github.com/notflawffles/termux-nerd-installer.git
+#cd termux-nerd-installer
+#rm -rf termux-nerd-installer
+#make install
+#cd ~
+#termux-nerd-installer i jetbrains-mono-ligatures
+#termux-nerd-installer s jetbrains-mono-ligatures
+##termux-nerd-installer l i
+
 # Setup Debian
 banner
 echo "${G}${BOLD} Setting up Proot-Distro Debian..."${W}
