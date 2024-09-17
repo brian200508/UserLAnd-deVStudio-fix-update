@@ -226,8 +226,8 @@ echo ""
 echo "${G}Start XFCE manually (in Termux - ${Y}not in Proot-Distro!!!${G})"${W}
 echo "    ${Y}~/startxfce4_debian.sh"${W}
 echo ""
-wait_for_key
+echo "${G}You should ${Y}restart Termux${G} right now${Y}!!!${G}"${W}
+echo "${G}Run the command below, close Termux App and open Termux App again"${W}
+echo "    ${Y}exit"${W}
 echo ""
-echo "${C}Starting Termux X11 right now..."${W}
-source ~/.bashrc
 cd ~

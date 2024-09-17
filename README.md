@@ -12,6 +12,10 @@ For better convenience additionally some developer stuff like [__VSCode__](https
 ```bash
 curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/install-debian.sh -o install-debian.sh && chmod +x install-debian.sh && ./install-debian.sh
 ```
+- Restart Termux: run the command below, close Termux App and open Termux App again
+```bash
+exit
+```
 
 ## Notes
 
