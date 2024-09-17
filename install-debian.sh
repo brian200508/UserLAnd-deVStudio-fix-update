@@ -108,8 +108,8 @@ wait_for_key
 banner
 echo "${G}${BOLD} Setting up Proot-Distro XFCE4..."${W}
 proot-distro login debian --user droiduser -- sudo apt install xfce4
-proot-distro login debian --user droiduser -- curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/install-debian.sh -o ~/startxfce4-debian.sh
-proot-distro login debian --user droiduser -- chmod +x ~/startxfce4-debian.sh
+curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/startxfce4-debian.sh -o ~/startxfce4-debian.sh
+chmod +x ~/startxfce4-debian.sh
 wait_for_key
 
 # Install Termux X11
@@ -220,4 +220,6 @@ echo ""
 echo "${G}Start XFCE (in Termux - ${Y}not in Proot-Distro!!!${G})"${W}
 echo "    ${Y}~/startxfce4_debian.sh"${W}
 echo ""
+echo "${C}Starting Termux X11 right now..."${W}
+source ~/.bashrc
 cd ~
