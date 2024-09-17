@@ -39,6 +39,16 @@ function confirmation_y_or_n() {
 
 }
 
+function wait_for_key() {
+  echo "${C}Press any key to continue"${W}
+  while [ true ] ; do
+    read -t 3 -n 1
+    if [ $? = 0 ] ; then
+      break ;
+    fi
+  done
+}
+
 function setup_tx11autostart() {
     #if [[ "$zsh_answer" == "y" ]]; then
     #    rc_file=~/.zshrc
@@ -73,11 +83,13 @@ echo "${G}${BOLD} Setting up Termux..."${W}
 termux-setup-storage
 pkg update -y
 pkg install -y curl git wget proot-distro
+wait_for_key
 
 # Setup Debian
 banner
 echo "${G}${BOLD} Setting up Proot-Distro Debian..."${W}
 proot-distro install debian
+wait_for_key
 
 # Setup user
 banner
@@ -87,6 +99,7 @@ proot-distro login debian -- apt install -y sudo nano adduser -y
 proot-distro login debian -- adduser droiduser
 proot-distro login debian -- sed -i '$ a # Add droiduser to sudoers' /etc/sudoers
 proot-distro login debian -- sed -i '$ a droiduser ALL=(ALL:ALL) ALL' /etc/sudoers
+wait_for_key
 
 # Install XFCE4
 banner
@@ -94,6 +107,7 @@ echo "${G}${BOLD} Setting up Proot-Distro XFCE4..."${W}
 proot-distro login debian --user droiduser -- sudo apt install xfce4
 proot-distro login debian --user droiduser -- curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/install-debian.sh -o ~/startxfce4-debian.sh
 proot-distro login debian --user droiduser -- chmod +x ~/startxfce4-debian.sh
+wait_for_key
 
 # Install Termux X11
 banner
@@ -102,6 +116,7 @@ pkg update
 pkg install x11-repo
 pkg install termux-x11-nightly
 pkg install pulseaudio
+wait_for_key
 
 ## Fix vscode.list: Use signed Microsoft Repo
 #banner
@@ -112,6 +127,7 @@ pkg install pulseaudio
 #proot-distro login debian -- sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 #proot-distro login debian -- rm -f packages.microsoft.gpg
 #proot-distro login debian -- sudo apt update -y
+#wait_for_key
 
 # Intall latest VSCode
 banner
@@ -123,6 +139,7 @@ proot-distro login debian --user droiduser -- sudo apt update -y
 #proot-distro login debian --user droiduser -- code --no-sandbox 
 #proot-distro login debian --user droiduser -- sed -i 's@code --new-window \%F@code --no-sandbox --new-window \%F@g' /usr/share/applications/code.desktop
 #proot-distro login debian --user droiduser -- sed -i 's@code \%F@code --no-sandbox \%F@g' /usr/share/applications/code.desktop
+wait_for_key
 
 # Install Chromium Browser
 banner
@@ -134,13 +151,15 @@ proot-distro login debian --user droiduser -- sudo apt update -y
 proot-distro login debian --user droiduser -- sudo apt install -y chromium
 proot-distro login debian --user droiduser -- sudo apt update -y
 #proot-distro login debian --user droiduser -- sed -i 's@chromium \%U@chromium --no-sandbox \%U@g' /usr/share/applications/chromium.desktop
-#proot-distro login debian --user droiduser -- chromium --no-sandbox 
+#proot-distro login debian --user droiduser -- chromium --no-sandbox
+wait_for_key
 
 # Git, Python3 and essentials
 banner
 echo "${G}${BOLD} Setting up Git, Python3 and essentials..."${W}
 proot-distro login debian --user droiduser -- sudo apt update -y
 proot-distro login debian --user droiduser -- sudo apt install -y build-essential curl git wget pgp python-is-python3 python3-distutils python3-venv python3-pip
+wait_for_key
 
 # Node.js
 banner
@@ -154,12 +173,14 @@ proot-distro login debian --user droiduser -- [ -s "$NVM_DIR/nvm.sh" ] && \. "$N
 proot-distro login debian --user droiduser -- [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # download and install Node.js (you may need to restart the terminal)
 proot-distro login debian --user droiduser -- nvm install 20
+wait_for_key
 
 # fix desktop links
 banner
 echo "${G}${BOLD} Fixing desktop links..."${W}
 proot-distro login debian --user droiduser -- curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/fix-desktop-links.sh -o ~/fix-desktop-links.sh
 proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
+wait_for_key
 
 banner
 echo "${G}${BOLD} Setting up X11 autostart..."${W}
@@ -168,6 +189,7 @@ setup_tx11autostart
 echo ""
 echo "${G}${BOLD} Removing installer script..."${W}
 rm -f ~/install-debian.sh
+wait_for_key
 
 # Summary
 banner
