@@ -77,15 +77,20 @@ function setup_tx11autostart() {
     fi
 }
 
-# Setup Termux
+# Install Termux (and Termux X11)
 banner
 echo "${G}${BOLD} Setting up Termux..."${W}
 pkg update -y
 termux-setup-storage
 pkg update -y
-pkg install -y git wget 
-pkg update -y
+pkg upgrade -y
+pkg install -y x11-repo
+pkg install -y termux-x11-nightly
+pkg install -y tur-repo
+pkg install -y pulseaudio
 pkg install -y proot-distro
+pkg install -y wget
+pkg install -y git
 wait_for_key
 
 ## Setup nerd fonts
@@ -126,14 +131,18 @@ curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termu
 chmod +x ~/startxfce4-debian.sh
 wait_for_key
 
-# Install Termux X11
+# Customize XFCE4
 banner
-echo "${G}${BOLD} Setting up Termux X11..."${W}
-pkg update -y
-pkg install -y x11-repo
-pkg install -y termux-x11-nightly
-pkg install -y pulseaudio
-wait_for_key
+echo "${G}${BOLD} Customizing Proot-Distro XFCE4..."${W}
+proot-distro login debian --user droiduser -- sudo apt install xfce4-whiskermenu-plugin
+proot-distro login debian --user droiduser -- sudo apt install mugshot
+proot-distro login debian --user droiduser -- apt search icon-theme
+proot-distro login debian --user droiduser -- sudo apt install papirus-icon-theme moka-icon-theme
+proot-distro login debian --user droiduser -- apt search gtk-themes
+proot-distro login debian --user droiduser -- sudo apt install numix-gtk-theme greybird-gtk-theme
+proot-distro login debian --user droiduser -- sudo apt install plank
+proot-distro login debian --user droiduser -- plank --preferences
+proot-distro login debian --user droiduser -- sudo apt install conky-all
 
 ## Fix vscode.list: Use signed Microsoft Repo
 #banner
