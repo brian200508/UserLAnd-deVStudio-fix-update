@@ -77,6 +77,99 @@ function setup_tx11autostart() {
     fi
 }
 
+function setup_user() {
+    banner
+	confirmation_y_or_n "Do you want to create a normal user account ${C}(Recomended)" pd_useradd_answer
+	echo "pd_useradd_answer=\"$pd_useradd_answer\"" >> $config_file
+	echo
+    if [[ "$pd_useradd_answer" == "n" ]]; then
+    echo "${R}[${W}-${R}]${G}Skiping User Account Setup"${W}
+    else
+	echo "${R}[${W}-${R}]${G}${BOLD} Select user account type"${W}
+    echo
+	echo "${Y}1. User with no password confirmation"${W}
+	echo
+	echo "${Y}2. User with password confirmation"${W}
+	echo 
+	read -p "${Y}select an option (Default 1): "${W} pd_pass_type
+	pd_pass_type=${pd_pass_type:-1}
+	echo "pd_pass_type=\"$pd_pass_type\"" >> $config_file
+	echo
+	echo "${R}[${W}-${R}]${G}Continuing with answer: $pd_pass_type"${W}
+	echo
+	sleep 0.2
+if [[ "$pd_pass_type" == "1" ]]; then
+	while true; do
+    read -p "${R}[${W}-${R}]${G}Input username [Lowercase]: "${W} user_name
+    echo
+    read -p "${R}[${W}-${R}]${Y}Do you want to continue with username ${C}$user_name ${Y}? (y/n) : "${W} choice
+	echo
+	choice="${choice:-y}"
+	echo
+	echo "${R}[${W}-${R}]${G}Continuing with answer: $choice"${W}
+	sleep 0.2
+    case $choice in
+        [yY]* )
+            echo "${R}[${W}-${R}]${G}Continuing with username ${C}$user_name "${W}
+            break;;
+        [nN]* )
+             echo "${G}Please provide username again."${W}
+            echo
+            ;;
+        * )
+            echo "${R}Invalid input. Please enter 'y' or 'n'."${W}
+            ;;
+    esac
+done
+elif [[ "$pd_pass_type" == "2" ]]; then
+    echo
+    echo "${R}[${W}-${R}]${G}${BOLD} Create user account"${W}
+    echo
+    while true; do
+    read -p "${R}[${W}-${R}]${G}Input username [Lowercase]: "${W} user_name
+    echo
+    read -p "${R}[${W}-${R}]${G}Input Password: "${W} pass
+    echo
+    read -p "${R}[${W}-${R}]${Y}Do you want to continue with username ${C}$user_name ${Y}and password ${C}$pass${Y} ? (y/n) : "${W} choice
+	echo
+	choice="${choice:-y}"
+	echo
+	echo "${R}[${W}-${R}]${G}Continuing with answer: $choice"${W}
+	echo ""
+	sleep 0.2
+    case $choice in
+        [yY]* )
+            echo "${R}[${W}-${R}]${G}Continuing with username ${C}$user_name ${G}and password ${C}$pass"${W}
+            break;;
+        [nN]* )
+             echo "${G}Please provide username and password again."${W}
+            echo
+            ;;
+        * )
+            echo "${R}Invalid input. Please enter 'y' or 'n'."${W}
+            ;;
+    esac
+done
+fi
+
+    echo "${G}${BOLD} Setting up User $user_name..."${W}
+    proot-distro login debian -- apt update -y
+    proot-distro login debian -- apt install -y sudo nano adduser
+    if [[ "$pd_pass_type" == "1" ]]; then
+        proot-distro login debian -- adduser --disabled-password $user_name
+        proot-distro login debian -- passwd -d $user_name
+    else
+        proot-distro login debian -- adduser $user_name
+    fi
+    proot-distro login debian -- sed -i "$ a # Add $user_name to sudoers" /etc/sudoers
+    if [[ "$pd_pass_type" == "1" ]]; then
+        proot-distro login debian -- sed -i "$ a $user_name ALL=(ALL) NOPASSWD:ALL" /etc/sudoers
+    else
+        proot-distro login debian -- sed -i "$ a $user_name ALL=(ALL:ALL) ALL" /etc/sudoers
+    fi
+    fi
+}
+
 # Install Termux (and Termux X11)
 banner
 echo "${G}${BOLD} Setting up Termux..."${W}
@@ -114,13 +207,7 @@ proot-distro install debian
 wait_for_key
 
 # Setup user
-banner
-echo "${G}${BOLD} Setting up User..."${W}
-proot-distro login debian -- apt update -y
-proot-distro login debian -- apt install -y sudo nano adduser
-proot-distro login debian -- adduser droiduser
-proot-distro login debian -- sed -i '$ a # Add droiduser to sudoers' /etc/sudoers
-proot-distro login debian -- sed -i '$ a droiduser ALL=(ALL:ALL) ALL' /etc/sudoers
+setup_user
 wait_for_key
 
 # Install XFCE4
@@ -128,6 +215,7 @@ banner
 echo "${G}${BOLD} Setting up Proot-Distro XFCE4..."${W}
 proot-distro login debian --user droiduser -- sudo apt install -y xfce4
 curl -Lf https://raw.githubusercontent.com/brian200508/proot-distro-debian-termux-x11/main/startxfce4-debian.sh -o ~/startxfce4-debian.sh
+sed -i "s@\%USER_NAME\%@$user_name@g" ~/startxfce4-debian.sh
 chmod +x ~/startxfce4-debian.sh
 wait_for_key
 
@@ -201,6 +289,7 @@ proot-distro login debian --user droiduser -- curl -Lf https://raw.githubusercon
 proot-distro login debian --user droiduser -- chmod +x ~/fix-desktop-links.sh
 wait_for_key
 
+# Termux X11 autostart
 banner
 echo "${G}${BOLD} Setting up X11 autostart..."${W}
 setup_tx11autostart
