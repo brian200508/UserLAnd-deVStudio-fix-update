@@ -134,15 +134,15 @@ wait_for_key
 # Customize XFCE4
 banner
 echo "${G}${BOLD} Customizing Proot-Distro XFCE4..."${W}
-proot-distro login debian --user droiduser -- sudo apt install xfce4-whiskermenu-plugin
-proot-distro login debian --user droiduser -- sudo apt install mugshot
+proot-distro login debian --user droiduser -- sudo apt install -y xfce4-whiskermenu-plugin
+proot-distro login debian --user droiduser -- sudo apt install -y mugshot
 proot-distro login debian --user droiduser -- apt search icon-theme
-proot-distro login debian --user droiduser -- sudo apt install papirus-icon-theme moka-icon-theme
+proot-distro login debian --user droiduser -- sudo apt install -y papirus-icon-theme moka-icon-theme
 proot-distro login debian --user droiduser -- apt search gtk-themes
-proot-distro login debian --user droiduser -- sudo apt install numix-gtk-theme greybird-gtk-theme
-proot-distro login debian --user droiduser -- sudo apt install plank
+proot-distro login debian --user droiduser -- sudo apt install -y numix-gtk-theme greybird-gtk-theme
+proot-distro login debian --user droiduser -- sudo apt install -y plank
 proot-distro login debian --user droiduser -- plank --preferences
-proot-distro login debian --user droiduser -- sudo apt install conky-all
+proot-distro login debian --user droiduser -- sudo apt install -y conky-all
 
 ## Fix vscode.list: Use signed Microsoft Repo
 #banner
